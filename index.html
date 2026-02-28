@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Hola! 西班牙文小教室</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Baloo+2:wght@700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #fff9f0;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  header { text-align: center; margin-bottom: 18px; }
+  header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header p { color: #999; font-size: 0.85rem; margin-top: 4px; }
+  #voiceInfo { font-size: 0.72rem; color: #ccc; margin-top: 3px; min-height: 1em; }
+
+  .tabs-wrapper { max-width: 980px; margin: 0 auto 16px; }
+  .tab-group-label {
+    text-align: center; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: .1em; color: #bbb; text-transform: uppercase;
+    margin: 10px 0 6px;
+  }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .tab {
+    padding: 6px 14px; border-radius: 999px; border: none;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    font-weight: 700; font-size: 0.82rem;
+    background: white; color: #555;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tab.active { color: white; }
+  .tab[data-cat="numbers"].active { background: #FF6B6B; }
+  .tab[data-cat="days"].active    { background: #FF9F43; }
+  .tab[data-cat="months"].active  { background: #F5C518; color: #444; }
+  .tab[data-cat="colors"].active  { background: #6BCB77; }
+  .tab[data-cat="shapes"].active  { background: #4D96FF; }
+  .tab[data-cat="basics"].active  { background: #A855F7; }
+  .tab[data-cat="animals"].active { background: #14B8A6; }
+  .tab[data-cat="body"].active    { background: #F43F5E; }
+  .tab[data-cat="food"].active    { background: #EF7C35; }
+  .tab[data-cat="people"].active  { background: #8B5CF6; }
+
+  .search-wrap { max-width: 320px; margin: 0 auto 16px; position: relative; }
+  .search-wrap input {
+    width: 100%; padding: 9px 16px 9px 38px;
+    border-radius: 999px; border: 2px solid #eee;
+    font-family: 'Nunito', sans-serif; font-size: 0.9rem;
+    outline: none; background: white;
+  }
+  .search-wrap input:focus { border-color: #4D96FF; }
+  .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 0.95rem; pointer-events: none; }
+
+  /* GRID — fixed columns, no minmax tricks */
+  .grid {
+    display: grid;
+    gap: 12px;
+    max-width: 980px;
+    margin: 0 auto;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (min-width: 700px) { .grid { grid-template-columns: repeat(5, 1fr); } }
+  @media (min-width: 900px) { .grid { grid-template-columns: repeat(6, 1fr); } }
+
+  /* CARD — NO animation, always visible */
+  .card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+    padding: 14px 10px 26px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    /* NO opacity, NO animation */
+  }
+  .card:active { opacity: 0.7; }
+
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+  }
+  .cat-numbers .card::before { background: #FF6B6B; }
+  .cat-days    .card::before { background: #FF9F43; }
+  .cat-months  .card::before { background: #F5C518; }
+  .cat-colors  .card::before { background: #6BCB77; }
+  .cat-shapes  .card::before { background: #4D96FF; }
+  .cat-basics  .card::before { background: #A855F7; }
+  .cat-animals .card::before { background: #14B8A6; }
+  .cat-body    .card::before { background: #F43F5E; }
+  .cat-food    .card::before { background: #EF7C35; }
+  .cat-people  .card::before { background: #8B5CF6; }
+  .cat-search  .card::before { background: #4D96FF; }
+
+  .card .visual {
+    font-size: 1.9rem; margin-bottom: 6px;
+    min-height: 44px; display: flex;
+    align-items: center; justify-content: center;
+  }
+  .card .color-swatch {
+    width: 44px; height: 44px; border-radius: 50%;
+    margin: 0 auto 6px; border: 2px solid rgba(0,0,0,0.07);
+  }
+  .card .shape-svg { width: 44px; height: 44px; margin: 0 auto 6px; display: block; }
+  .card .num-display {
+    font-family: 'Baloo 2', cursive; font-size: 1.8rem;
+    font-weight: 800; color: #FF6B6B; line-height: 1; margin-bottom: 2px;
+  }
+  .dot-grid {
+    display: flex; flex-wrap: wrap; gap: 3px;
+    justify-content: center; max-width: 40px;
+    margin: 0 auto 4px;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #FF6B6B; }
+
+  .card .es {
+    font-family: 'Baloo 2', cursive; font-size: 1rem;
+    font-weight: 800; color: #333; line-height: 1.2;
+  }
+  .card .zh { font-size: 0.72rem; color: #aaa; margin-top: 3px; }
+  .card .en { font-size: 0.66rem; color: #ccc; margin-top: 1px; }
+  .card .speak-btn {
+    position: absolute; bottom: 6px; right: 6px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #f0f0f0; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 0.75rem;
+  }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    background: #222; color: white;
+    padding: 8px 18px; border-radius: 999px;
+    font-size: 0.84rem; opacity: 0;
+    pointer-events: none; transition: opacity .25s;
+    z-index: 999; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>¡Hola! 西班牙文小教室</h1>
+  <p>點卡片就會說話 🔊 · Tap any card to hear it!</p>
+  <p id="voiceInfo"></p>
+</header>
+
+<div class="tabs-wrapper">
+  <div class="tab-group-label">基礎 Basics</div>
+  <div class="tabs" id="tabs-basic"></div>
+  <div class="tab-group-label">詞彙 Vocabulary</div>
+  <div class="tabs" id="tabs-vocab"></div>
+</div>
+
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input type="text" id="searchInput" placeholder="搜尋單字 · search">
+</div>
+
+<div class="grid" id="grid"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var data = {
+  numbers:{label:'🔢 數字',group:'basic',items:[
+    {es:'cero',zh:'零',en:'0',n:0},{es:'uno',zh:'一',en:'1',n:1},{es:'dos',zh:'二',en:'2',n:2},
+    {es:'tres',zh:'三',en:'3',n:3},{es:'cuatro',zh:'四',en:'4',n:4},{es:'cinco',zh:'五',en:'5',n:5},
+    {es:'seis',zh:'六',en:'6',n:6},{es:'siete',zh:'七',en:'7',n:7},{es:'ocho',zh:'八',en:'8',n:8},
+    {es:'nueve',zh:'九',en:'9',n:9},{es:'diez',zh:'十',en:'10',n:10},
+    {es:'once',zh:'十一',en:'11',n:11},{es:'doce',zh:'十二',en:'12',n:12},
+    {es:'trece',zh:'十三',en:'13',n:13},{es:'catorce',zh:'十四',en:'14',n:14},
+    {es:'quince',zh:'十五',en:'15',n:15},{es:'dieciséis',zh:'十六',en:'16',n:16},
+    {es:'diecisiete',zh:'十七',en:'17',n:17},{es:'dieciocho',zh:'十八',en:'18',n:18},
+    {es:'diecinueve',zh:'十九',en:'19',n:19},{es:'veinte',zh:'二十',en:'20',n:20},
+    {es:'veintiuno',zh:'二十一',en:'21',n:21},{es:'veintidós',zh:'二十二',en:'22',n:22},
+    {es:'veintitrés',zh:'二十三',en:'23',n:23},{es:'veinticuatro',zh:'二十四',en:'24',n:24},
+    {es:'veinticinco',zh:'二十五',en:'25',n:25},{es:'veintiséis',zh:'二十六',en:'26',n:26},
+    {es:'veintisiete',zh:'二十七',en:'27',n:27},{es:'veintiocho',zh:'二十八',en:'28',n:28},
+    {es:'veintinueve',zh:'二十九',en:'29',n:29},{es:'treinta',zh:'三十',en:'30',n:30},
+    {es:'treinta y uno',zh:'三十一',en:'31',n:31},{es:'treinta y dos',zh:'三十二',en:'32',n:32},
+    {es:'treinta y tres',zh:'三十三',en:'33',n:33},{es:'treinta y cuatro',zh:'三十四',en:'34',n:34},
+    {es:'treinta y cinco',zh:'三十五',en:'35',n:35},{es:'treinta y seis',zh:'三十六',en:'36',n:36},
+    {es:'treinta y siete',zh:'三十七',en:'37',n:37},{es:'treinta y ocho',zh:'三十八',en:'38',n:38},
+    {es:'treinta y nueve',zh:'三十九',en:'39',n:39},{es:'cuarenta',zh:'四十',en:'40',n:40},
+    {es:'cuarenta y uno',zh:'四十一',en:'41',n:41},{es:'cuarenta y cinco',zh:'四十五',en:'45',n:45},
+    {es:'cincuenta',zh:'五十',en:'50',n:50},{es:'cincuenta y cinco',zh:'五十五',en:'55',n:55},
+    {es:'sesenta',zh:'六十',en:'60',n:60},{es:'sesenta y cinco',zh:'六十五',en:'65',n:65},
+    {es:'setenta',zh:'七十',en:'70',n:70},{es:'setenta y cinco',zh:'七十五',en:'75',n:75},
+    {es:'ochenta',zh:'八十',en:'80',n:80},{es:'ochenta y cinco',zh:'八十五',en:'85',n:85},
+    {es:'noventa',zh:'九十',en:'90',n:90},{es:'noventa y cinco',zh:'九十五',en:'95',n:95},
+    {es:'cien',zh:'一百',en:'100',n:100},
+  ]},
+  days:{label:'📅 星期',group:'basic',items:[
+    {es:'lunes',zh:'星期一',en:'Monday',emoji:'🌙'},{es:'martes',zh:'星期二',en:'Tuesday',emoji:'🔴'},
+    {es:'miércoles',zh:'星期三',en:'Wednesday',emoji:'💧'},{es:'jueves',zh:'星期四',en:'Thursday',emoji:'⚡'},
+    {es:'viernes',zh:'星期五',en:'Friday',emoji:'✨'},{es:'sábado',zh:'星期六',en:'Saturday',emoji:'🎉'},
+    {es:'domingo',zh:'星期日',en:'Sunday',emoji:'☀️'},
+  ]},
+  months:{label:'🗓 月份',group:'basic',items:[
+    {es:'enero',zh:'一月',en:'January',emoji:'❄️'},{es:'febrero',zh:'二月',en:'February',emoji:'💝'},
+    {es:'marzo',zh:'三月',en:'March',emoji:'🌱'},{es:'abril',zh:'四月',en:'April',emoji:'🌧️'},
+    {es:'mayo',zh:'五月',en:'May',emoji:'🌸'},{es:'junio',zh:'六月',en:'June',emoji:'☀️'},
+    {es:'julio',zh:'七月',en:'July',emoji:'🏖️'},{es:'agosto',zh:'八月',en:'August',emoji:'🌊'},
+    {es:'septiembre',zh:'九月',en:'September',emoji:'🍂'},{es:'octubre',zh:'十月',en:'October',emoji:'🎃'},
+    {es:'noviembre',zh:'十一月',en:'November',emoji:'🍁'},{es:'diciembre',zh:'十二月',en:'December',emoji:'🎄'},
+  ]},
+  colors:{label:'🎨 顏色',group:'basic',items:[
+    {es:'rojo',zh:'紅色',en:'red',color:'#EF4444'},{es:'naranja',zh:'橘色',en:'orange',color:'#F97316'},
+    {es:'amarillo',zh:'黃色',en:'yellow',color:'#EAB308'},{es:'verde',zh:'綠色',en:'green',color:'#22C55E'},
+    {es:'azul',zh:'藍色',en:'blue',color:'#3B82F6'},{es:'morado',zh:'紫色',en:'purple',color:'#A855F7'},
+    {es:'rosa',zh:'粉色',en:'pink',color:'#EC4899'},{es:'blanco',zh:'白色',en:'white',color:'#e8e8e8'},
+    {es:'negro',zh:'黑色',en:'black',color:'#222'},{es:'marrón',zh:'棕色',en:'brown',color:'#92400E'},
+    {es:'gris',zh:'灰色',en:'gray',color:'#9CA3AF'},
+  ]},
+  shapes:{label:'🔷 形狀',group:'basic',items:[
+    {es:'círculo',zh:'圓形',en:'circle',shape:'circle',color:'#FF6B6B'},
+    {es:'cuadrado',zh:'正方形',en:'square',shape:'square',color:'#4D96FF'},
+    {es:'triángulo',zh:'三角形',en:'triangle',shape:'triangle',color:'#6BCB77'},
+    {es:'rectángulo',zh:'長方形',en:'rectangle',shape:'rectangle',color:'#FFD93D'},
+    {es:'estrella',zh:'星形',en:'star',shape:'star',color:'#FF9F43'},
+    {es:'corazón',zh:'心形',en:'heart',shape:'heart',color:'#EC4899'},
+    {es:'óvalo',zh:'橢圓形',en:'oval',shape:'oval',color:'#A855F7'},
+  ]},
+  basics:{label:'💬 用語',group:'basic',items:[
+    {es:'hola',zh:'你好',en:'hello',emoji:'👋'},{es:'adiós',zh:'再見',en:'goodbye',emoji:'🙋'},
+    {es:'gracias',zh:'謝謝',en:'thank you',emoji:'🙏'},{es:'por favor',zh:'請',en:'please',emoji:'✨'},
+    {es:'sí',zh:'是',en:'yes',emoji:'✅'},{es:'no',zh:'不',en:'no',emoji:'❌'},
+    {es:'perdón',zh:'對不起',en:'sorry',emoji:'😅'},{es:'bien',zh:'好',en:'good',emoji:'👍'},
+    {es:'mal',zh:'不好',en:'bad',emoji:'👎'},{es:'me llamo…',zh:'我叫…',en:'my name is…',emoji:'🏷️'},
+    {es:'¿cómo estás?',zh:'你好嗎？',en:'how are you?',emoji:'😊'},{es:'estoy bien',zh:'我很好',en:"I'm fine",emoji:'😄'},
+    {es:'me gusta',zh:'我喜歡',en:'I like',emoji:'❤️'},{es:'no me gusta',zh:'我不喜歡',en:"I don't like",emoji:'🙅'},
+  ]},
+  animals:{label:'🐾 動物',group:'vocab',items:[
+    {es:'perro',zh:'狗',en:'dog',emoji:'🐶'},{es:'gato',zh:'貓',en:'cat',emoji:'🐱'},
+    {es:'pájaro',zh:'鳥',en:'bird',emoji:'🐦'},{es:'pez',zh:'魚',en:'fish',emoji:'🐟'},
+    {es:'conejo',zh:'兔子',en:'rabbit',emoji:'🐰'},{es:'oso',zh:'熊',en:'bear',emoji:'🐻'},
+    {es:'elefante',zh:'大象',en:'elephant',emoji:'🐘'},{es:'jirafa',zh:'長頸鹿',en:'giraffe',emoji:'🦒'},
+    {es:'mono',zh:'猴子',en:'monkey',emoji:'🐒'},{es:'tigre',zh:'老虎',en:'tiger',emoji:'🐯'},
+    {es:'león',zh:'獅子',en:'lion',emoji:'🦁'},{es:'vaca',zh:'牛',en:'cow',emoji:'🐄'},
+    {es:'cerdo',zh:'豬',en:'pig',emoji:'🐷'},{es:'pollo',zh:'雞',en:'chicken',emoji:'🐔'},
+    {es:'caballo',zh:'馬',en:'horse',emoji:'🐴'},{es:'serpiente',zh:'蛇',en:'snake',emoji:'🐍'},
+    {es:'tortuga',zh:'烏龜',en:'turtle',emoji:'🐢'},{es:'mariposa',zh:'蝴蝶',en:'butterfly',emoji:'🦋'},
+    {es:'pato',zh:'鴨子',en:'duck',emoji:'🦆'},{es:'pingüino',zh:'企鵝',en:'penguin',emoji:'🐧'},
+    {es:'rana',zh:'青蛙',en:'frog',emoji:'🐸'},{es:'araña',zh:'蜘蛛',en:'spider',emoji:'🕷️'},
+  ]},
+  body:{label:'🫀 身體',group:'vocab',items:[
+    {es:'cabeza',zh:'頭',en:'head',emoji:'🗣️'},{es:'cara',zh:'臉',en:'face',emoji:'😊'},
+    {es:'ojo',zh:'眼睛',en:'eye',emoji:'👁️'},{es:'nariz',zh:'鼻子',en:'nose',emoji:'👃'},
+    {es:'boca',zh:'嘴巴',en:'mouth',emoji:'👄'},{es:'oreja',zh:'耳朵',en:'ear',emoji:'👂'},
+    {es:'diente',zh:'牙齒',en:'tooth',emoji:'🦷'},{es:'lengua',zh:'舌頭',en:'tongue',emoji:'👅'},
+    {es:'pelo',zh:'頭髮',en:'hair',emoji:'💇'},{es:'cuello',zh:'脖子',en:'neck',emoji:'🤷'},
+    {es:'hombro',zh:'肩膀',en:'shoulder',emoji:'🤷'},{es:'brazo',zh:'手臂',en:'arm',emoji:'💪'},
+    {es:'codo',zh:'手肘',en:'elbow',emoji:'💪'},{es:'mano',zh:'手',en:'hand',emoji:'✋'},
+    {es:'dedo',zh:'手指',en:'finger',emoji:'☝️'},{es:'barriga',zh:'肚子',en:'belly',emoji:'🫃'},
+    {es:'espalda',zh:'背部',en:'back',emoji:'🔙'},{es:'pierna',zh:'腿',en:'leg',emoji:'🦵'},
+    {es:'rodilla',zh:'膝蓋',en:'knee',emoji:'🦵'},{es:'pie',zh:'腳',en:'foot',emoji:'🦶'},
+    {es:'corazón',zh:'心臟',en:'heart',emoji:'❤️'},
+  ]},
+  food:{label:'🍎 食物',group:'vocab',items:[
+    {es:'manzana',zh:'蘋果',en:'apple',emoji:'🍎'},{es:'plátano',zh:'香蕉',en:'banana',emoji:'🍌'},
+    {es:'naranja',zh:'柳橙',en:'orange',emoji:'🍊'},{es:'uva',zh:'葡萄',en:'grape',emoji:'🍇'},
+    {es:'fresa',zh:'草莓',en:'strawberry',emoji:'🍓'},{es:'sandía',zh:'西瓜',en:'watermelon',emoji:'🍉'},
+    {es:'mango',zh:'芒果',en:'mango',emoji:'🥭'},{es:'durazno',zh:'桃子',en:'peach',emoji:'🍑'},
+    {es:'pan',zh:'麵包',en:'bread',emoji:'🍞'},{es:'arroz',zh:'米飯',en:'rice',emoji:'🍚'},
+    {es:'pasta',zh:'義大利麵',en:'pasta',emoji:'🍝'},{es:'sopa',zh:'湯',en:'soup',emoji:'🍜'},
+    {es:'pizza',zh:'披薩',en:'pizza',emoji:'🍕'},{es:'hamburguesa',zh:'漢堡',en:'burger',emoji:'🍔'},
+    {es:'huevo',zh:'蛋',en:'egg',emoji:'🥚'},{es:'queso',zh:'起司',en:'cheese',emoji:'🧀'},
+    {es:'leche',zh:'牛奶',en:'milk',emoji:'🥛'},{es:'agua',zh:'水',en:'water',emoji:'💧'},
+    {es:'jugo',zh:'果汁',en:'juice',emoji:'🧃'},{es:'helado',zh:'冰淇淋',en:'ice cream',emoji:'🍦'},
+    {es:'pastel',zh:'蛋糕',en:'cake',emoji:'🎂'},{es:'galleta',zh:'餅乾',en:'cookie',emoji:'🍪'},
+    {es:'chocolate',zh:'巧克力',en:'chocolate',emoji:'🍫'},{es:'zanahoria',zh:'胡蘿蔔',en:'carrot',emoji:'🥕'},
+    {es:'tomate',zh:'番茄',en:'tomato',emoji:'🍅'},{es:'maíz',zh:'玉米',en:'corn',emoji:'🌽'},
+  ]},
+  people:{label:'👨‍👩‍👧 人物',group:'vocab',items:[
+    {es:'mamá',zh:'媽媽',en:'mom',emoji:'👩'},{es:'papá',zh:'爸爸',en:'dad',emoji:'👨'},
+    {es:'abuelo',zh:'爺爺/外公',en:'grandpa',emoji:'👴'},{es:'abuela',zh:'奶奶/外婆',en:'grandma',emoji:'👵'},
+    {es:'hermano mayor',zh:'哥哥',en:'older brother',emoji:'🧒'},{es:'hermana mayor',zh:'姊姊',en:'older sister',emoji:'👧'},
+    {es:'hermano menor',zh:'弟弟',en:'younger brother',emoji:'👦'},{es:'hermana menor',zh:'妹妹',en:'younger sister',emoji:'🧒'},
+    {es:'tío',zh:'叔叔/舅舅',en:'uncle',emoji:'🧔'},{es:'tía',zh:'阿姨/姑姑',en:'aunt',emoji:'👩'},
+    {es:'primo',zh:'表/堂哥弟',en:'cousin (m)',emoji:'🧑'},{es:'prima',zh:'表/堂姊妹',en:'cousin (f)',emoji:'🧑'},
+    {es:'amigo',zh:'朋友(男)',en:'friend (m)',emoji:'🤝'},{es:'amiga',zh:'朋友(女)',en:'friend (f)',emoji:'🤝'},
+    {es:'mejor amigo',zh:'好朋友(男)',en:'best friend (m)',emoji:'👫'},{es:'mejor amiga',zh:'好朋友(女)',en:'best friend (f)',emoji:'👭'},
+    {es:'compañero',zh:'同學(男)',en:'classmate (m)',emoji:'🧑‍🎓'},{es:'compañera',zh:'同學(女)',en:'classmate (f)',emoji:'👩‍🎓'},
+    {es:'maestro',zh:'老師(男)',en:'teacher (m)',emoji:'👨‍🏫'},{es:'maestra',zh:'老師(女)',en:'teacher (f)',emoji:'👩‍🏫'},
+    {es:'niño',zh:'小男孩',en:'boy',emoji:'👦'},{es:'niña',zh:'小女孩',en:'girl',emoji:'👧'},
+    {es:'bebé',zh:'寶寶',en:'baby',emoji:'👶'},{es:'yo',zh:'我',en:'I / me',emoji:'🙋'},
+    {es:'tú',zh:'你',en:'you',emoji:'👉'},
+  ]},
+};
+
+function shapeSVG(shape,color){
+  var c=color||'#4D96FF';
+  switch(shape){
+    case 'circle':    return '<svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="'+c+'"/></svg>';
+    case 'square':    return '<svg viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="4" fill="'+c+'"/></svg>';
+    case 'triangle':  return '<svg viewBox="0 0 52 52"><polygon points="26,4 50,48 2,48" fill="'+c+'"/></svg>';
+    case 'rectangle': return '<svg viewBox="0 0 52 52"><rect x="3" y="13" width="46" height="26" rx="4" fill="'+c+'"/></svg>';
+    case 'star':      return '<svg viewBox="0 0 52 52"><polygon points="26,3 32,19 49,19 36,30 41,47 26,37 11,47 16,30 3,19 20,19" fill="'+c+'"/></svg>';
+    case 'heart':     return '<svg viewBox="0 0 52 52"><path d="M26,44 C26,44 5,30 5,17 C5,10 10,5 18,7 C22,8 26,12 26,12 C26,12 30,8 34,7 C42,5 47,10 47,17 C47,30 26,44 26,44Z" fill="'+c+'"/></svg>';
+    case 'oval':      return '<svg viewBox="0 0 52 52"><ellipse cx="26" cy="26" rx="23" ry="14" fill="'+c+'"/></svg>';
+    default: return '';
+  }
+}
+
+function numVisual(n){
+  if(n>10) return '<div class="num-display">'+n+'</div>';
+  if(n===0) return '<div class="num-display">0</div>';
+  var dots='';
+  for(var i=0;i<n;i++){ dots+='<div class="dot"></div>'; }
+  return '<div class="dot-grid">'+dots+'</div>';
+}
+
+/* ── Voice ── */
+var esVoice = null;
+function loadVoice(){
+  var voices=speechSynthesis.getVoices();
+  esVoice=
+    voices.filter(function(v){ return v.lang==='es-ES' && /helena|monica|paulina|female|woman/i.test(v.name); })[0] ||
+    voices.filter(function(v){ return v.lang==='es-ES'; })[0] ||
+    voices.filter(function(v){ return v.lang==='es-MX'; })[0] ||
+    voices.filter(function(v){ return v.lang.indexOf('es')===0; })[0] || null;
+  var el=document.getElementById('voiceInfo');
+  if(el) el.textContent=esVoice ? '🎙 '+esVoice.name+' ('+esVoice.lang+')' : '';
+}
+speechSynthesis.onvoiceschanged = loadVoice;
+loadVoice();
+
+function speak(text){
+  speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text);
+  u.lang='es-ES'; u.rate=0.82; u.pitch=1.05;
+  if(esVoice) u.voice=esVoice;
+  speechSynthesis.speak(u);
+}
+
+var toastTimer;
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent='🔊 '+msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(function(){ t.classList.remove('show'); },1800);
+}
+
+function buildCard(item,cat){
+  var card=document.createElement('div');
+  card.className='card';
+  var visual='';
+  if(cat==='colors'&&item.color!==undefined){
+    visual='<div class="color-swatch" style="background:'+item.color+'"></div>';
+  } else if(item.shape){
+    visual='<div class="shape-svg">'+shapeSVG(item.shape,item.color)+'</div>';
+  } else if(item.n!==undefined){
+    visual='<div class="visual">'+numVisual(item.n)+'</div>';
+  } else if(item.emoji){
+    visual='<div class="visual">'+item.emoji+'</div>';
+  }
+  card.innerHTML=visual+'<div class="es">'+item.es+'</div><div class="zh">'+item.zh+'</div><div class="en">'+item.en+'</div><div class="speak-btn">🔊</div>';
+  (function(text,zh){ card.addEventListener('click',function(){ speak(text); showToast(text+' = '+zh); }); })(item.es,item.zh);
+  return card;
+}
+
+/* ── Render ── */
+var current='numbers';
+
+function renderGrid(cat){
+  current=cat;
+  document.getElementById('searchInput').value='';
+  var grid=document.getElementById('grid');
+  grid.className='grid cat-'+cat;
+  grid.innerHTML='';
+  data[cat].items.forEach(function(item){ grid.appendChild(buildCard(item,cat)); });
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active',t.dataset.cat===cat); });
+}
+
+function renderSearch(q){
+  var grid=document.getElementById('grid');
+  grid.className='grid cat-search';
+  grid.innerHTML='';
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  var count=0;
+  for(var cat in data){
+    var catData=data[cat];
+    catData.items.forEach(function(item){
+      if(item.es.toLowerCase().indexOf(q)>-1 || item.zh.indexOf(q)>-1 || item.en.toLowerCase().indexOf(q)>-1){
+        grid.appendChild(buildCard(item,cat)); count++;
+      }
+    });
+  }
+  if(count===0) grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#ccc;padding:40px">找不到 · not found 😅</div>';
+}
+
+function renderTabs(){
+  var bc=document.getElementById('tabs-basic');
+  var vc=document.getElementById('tabs-vocab');
+  for(var key in data){
+    var val=data[key];
+    var t=document.createElement('button');
+    t.className='tab'+(key===current?' active':'');
+    t.dataset.cat=key; t.textContent=val.label;
+    (function(k){ t.addEventListener('click',function(){ renderGrid(k); }); })(key);
+    (val.group==='basic'?bc:vc).appendChild(t);
+  }
+}
+
+var searchTimer;
+document.getElementById('searchInput').addEventListener('input',function(){
+  clearTimeout(searchTimer);
+  var q=this.value.trim().toLowerCase();
+  if(!q){renderGrid(current);return;}
+  searchTimer=setTimeout(function(){ renderSearch(q); },220);
+});
+
+renderTabs();
+renderGrid(current);
+</script>
+</body>
+</html>
