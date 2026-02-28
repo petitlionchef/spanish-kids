@@ -140,6 +140,9 @@
   .tab[data-cat="body"].active    { background:#F43F5E; }
   .tab[data-cat="food"].active    { background:#EF7C35; }
   .tab[data-cat="people"].active  { background:#8B5CF6; }
+  .tab[data-cat="weather"].active  { background:#38BDF8; }
+  .tab[data-cat="classroom"].active{ background:#F97316; }
+  .tab[data-cat="transport"].active{ background:#64748B; color:white; }
 
   .search-wrap { max-width:320px; margin:0 auto 16px; position:relative; }
   .search-wrap input {
@@ -204,7 +207,10 @@
   .cat-animals .card::before { background:#14B8A6; }
   .cat-body    .card::before { background:#F43F5E; }
   .cat-food    .card::before { background:#EF7C35; }
-  .cat-people  .card::before { background:#8B5CF6; }
+  .cat-people    .card::before { background:#8B5CF6; }
+  .cat-weather   .card::before { background:#38BDF8; }
+  .cat-classroom .card::before { background:#F97316; }
+  .cat-transport .card::before { background:#64748B; }
   .cat-search  .card::before { background:#4D96FF; }
 
   .card .visual { font-size:1.9rem; margin-bottom:6px; min-height:44px; display:flex; align-items:center; justify-content:center; }
@@ -397,6 +403,36 @@ var data = {
     {es:'nino',zh:'小男孩',en:'boy',emoji:'👦'},{es:'nina',zh:'小女孩',en:'girl',emoji:'👧'},
     {es:'bebe',zh:'寶寶',en:'baby',emoji:'👶'},{es:'yo',zh:'我',en:'I / me',emoji:'🙋'},
     {es:'tu',zh:'你',en:'you',emoji:'👉'},
+  ]},
+  weather:{label:'🌤️ 天氣四季',group:'vocab',items:[
+    {es:'sol',zh:'太陽',en:'sun',emoji:'☀️'},{es:'lluvia',zh:'雨',en:'rain',emoji:'🌧️'},
+    {es:'nube',zh:'雲',en:'cloud',emoji:'☁️'},{es:'viento',zh:'風',en:'wind',emoji:'💨'},
+    {es:'nieve',zh:'雪',en:'snow',emoji:'❄️'},{es:'tormenta',zh:'暴風雨',en:'storm',emoji:'⛈️'},
+    {es:'arcoiris',zh:'彩虹',en:'rainbow',emoji:'🌈'},{es:'niebla',zh:'霧',en:'fog',emoji:'🌫️'},
+    {es:'calor',zh:'熱',en:'hot',emoji:'🥵'},{es:'frio',zh:'冷',en:'cold',emoji:'🥶'},
+    {es:'templado',zh:'溫暖',en:'warm',emoji:'😊'},{es:'humedo',zh:'潮濕',en:'humid',emoji:'💦'},
+    {es:'primavera',zh:'春天',en:'spring',emoji:'🌸'},{es:'verano',zh:'夏天',en:'summer',emoji:'🌻'},
+    {es:'otono',zh:'秋天',en:'autumn',emoji:'🍂'},{es:'invierno',zh:'冬天',en:'winter',emoji:'⛄'},
+  ]},
+  classroom:{label:'🎒 教室用品',group:'vocab',items:[
+    {es:'mochila',zh:'書包',en:'backpack',emoji:'🎒'},{es:'libro',zh:'書',en:'book',emoji:'📚'},
+    {es:'cuaderno',zh:'筆記本',en:'notebook',emoji:'📓'},{es:'lapiz',zh:'鉛筆',en:'pencil',emoji:'✏️'},
+    {es:'boligrafo',zh:'原子筆',en:'pen',emoji:'🖊️'},{es:'goma',zh:'橡皮擦',en:'eraser',emoji:'🧹'},
+    {es:'regla',zh:'尺',en:'ruler',emoji:'📏'},{es:'tijeras',zh:'剪刀',en:'scissors',emoji:'✂️'},
+    {es:'pegamento',zh:'膠水',en:'glue',emoji:'🗂️'},{es:'colores',zh:'彩色筆',en:'crayons',emoji:'🖍️'},
+    {es:'pizarra',zh:'黑板',en:'blackboard',emoji:'🖥️'},{es:'escritorio',zh:'桌子',en:'desk',emoji:'🪑'},
+    {es:'silla',zh:'椅子',en:'chair',emoji:'🪑'},{es:'mapa',zh:'地圖',en:'map',emoji:'🗺️'},
+    {es:'computadora',zh:'電腦',en:'computer',emoji:'💻'},{es:'calculadora',zh:'計算機',en:'calculator',emoji:'🧮'},
+  ]},
+  transport:{label:'🚗 交通工具',group:'vocab',items:[
+    {es:'coche',zh:'汽車',en:'car',emoji:'🚗'},{es:'autobus',zh:'公車',en:'bus',emoji:'🚌'},
+    {es:'tren',zh:'火車',en:'train',emoji:'🚆'},{es:'metro',zh:'地鐵',en:'subway',emoji:'🚇'},
+    {es:'bicicleta',zh:'腳踏車',en:'bicycle',emoji:'🚲'},{es:'moto',zh:'摩托車',en:'motorcycle',emoji:'🏍️'},
+    {es:'avion',zh:'飛機',en:'airplane',emoji:'✈️'},{es:'barco',zh:'船',en:'ship',emoji:'🚢'},
+    {es:'taxi',zh:'計程車',en:'taxi',emoji:'🚕'},{es:'camion',zh:'卡車',en:'truck',emoji:'🚚'},
+    {es:'helicoptero',zh:'直升機',en:'helicopter',emoji:'🚁'},{es:'cohete',zh:'火箭',en:'rocket',emoji:'🚀'},
+    {es:'patineta',zh:'滑板',en:'skateboard',emoji:'🛹'},{es:'a pie',zh:'走路',en:'on foot',emoji:'🚶'},
+    {es:'ambulancia',zh:'救護車',en:'ambulance',emoji:'🚑'},{es:'bomberos',zh:'消防車',en:'fire truck',emoji:'🚒'},
   ]},
 };
 
