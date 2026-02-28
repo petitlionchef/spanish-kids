@@ -216,12 +216,23 @@
   .cat-search  .card::before { background:#4D96FF; }
 
   .card .visual { font-size:1.9rem; margin-bottom:6px; min-height:44px; display:flex; align-items:center; justify-content:center; }
+  .card .visual img.emoji { width:36px; height:36px; }
   .card .color-swatch { width:44px; height:44px; border-radius:50%; margin:0 auto 6px; border:2px solid rgba(0,0,0,0.07); }
   .card .shape-svg { width:44px; height:44px; margin:0 auto 6px; display:block; }
   .card .num-display { font-family:'Baloo 2',cursive; font-size:1.8rem; font-weight:800; color:#FF6B6B; line-height:1; margin-bottom:2px; }
   .dot-grid { display:flex; flex-wrap:wrap; gap:3px; justify-content:center; max-width:40px; margin:0 auto 4px; }
   .dot { width:7px; height:7px; border-radius:50%; background:#FF6B6B; }
   .card .es { font-family:'Baloo 2',cursive; font-size:1rem; font-weight:800; color:#333; line-height:1.2; }
+  .art-badge {
+    display:inline-block; font-size:0.6rem; font-weight:800;
+    padding:1px 5px; border-radius:6px; margin-right:3px;
+    vertical-align:middle; position:relative; top:-1px;
+    font-family:'Nunito',sans-serif; letter-spacing:0.02em;
+  }
+  .art-el  { background:#FFF0E0; color:#F97316; }
+  .art-la  { background:#F3E8FF; color:#A855F7; }
+  .art-los { background:#FFF0E0; color:#F97316; }
+  .art-las { background:#F3E8FF; color:#A855F7; }
   .card .zh { font-size:0.72rem; color:#aaa; margin-top:3px; font-family:'Noto Sans TC',sans-serif; font-weight:700; }
   .card .en { font-size:0.66rem; color:#ccc; margin-top:1px; }
   .card .speak-btn { position:absolute; bottom:6px; right:6px; width:22px; height:22px; border-radius:50%; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:0.75rem; }
@@ -229,6 +240,7 @@
   .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#222; color:white; padding:8px 18px; border-radius:999px; font-size:0.84rem; opacity:0; pointer-events:none; transition:opacity .25s; z-index:998; white-space:nowrap; }
   .toast.show { opacity:1; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js"></script>
 </head>
 <body>
 
@@ -351,45 +363,45 @@ var data = {
     {es:'me gusta',zh:'我喜歡',en:'I like',emoji:'❤️'},{es:'no me gusta',zh:'我不喜歡',en:"I don't like",emoji:'🙅'},
   ]},
   animals:{label:'🐾 動物',group:'vocab',items:[
-    {es:'perro',zh:'狗',en:'dog',emoji:'🐶'},{es:'gato',zh:'貓',en:'cat',emoji:'🐱'},
-    {es:'pajaro',zh:'鳥',en:'bird',emoji:'🐦'},{es:'pez',zh:'魚',en:'fish',emoji:'🐟'},
-    {es:'conejo',zh:'兔子',en:'rabbit',emoji:'🐰'},{es:'oso',zh:'熊',en:'bear',emoji:'🐻'},
-    {es:'elefante',zh:'大象',en:'elephant',emoji:'🐘'},{es:'jirafa',zh:'長頸鹿',en:'giraffe',emoji:'🦒'},
-    {es:'mono',zh:'猴子',en:'monkey',emoji:'🐒'},{es:'tigre',zh:'老虎',en:'tiger',emoji:'🐯'},
-    {es:'leon',zh:'獅子',en:'lion',emoji:'🦁'},{es:'vaca',zh:'牛',en:'cow',emoji:'🐄'},
-    {es:'cerdo',zh:'豬',en:'pig',emoji:'🐷'},{es:'pollo',zh:'雞',en:'chicken',emoji:'🐔'},
-    {es:'caballo',zh:'馬',en:'horse',emoji:'🐴'},{es:'serpiente',zh:'蛇',en:'snake',emoji:'🐍'},
-    {es:'tortuga',zh:'烏龜',en:'turtle',emoji:'🐢'},{es:'mariposa',zh:'蝴蝶',en:'butterfly',emoji:'🦋'},
-    {es:'pato',zh:'鴨子',en:'duck',emoji:'🦆'},{es:'pinguino',zh:'企鵝',en:'penguin',emoji:'🐧'},
-    {es:'rana',zh:'青蛙',en:'frog',emoji:'🐸'},{es:'arana',zh:'蜘蛛',en:'spider',emoji:'🕷️'},
+    {es:'perro',zh:'狗',en:'dog',emoji:'🐶',art:'el'},{es:'gato',zh:'貓',en:'cat',emoji:'🐱',art:'el'},
+    {es:'pajaro',zh:'鳥',en:'bird',emoji:'🐦',art:'el'},{es:'pez',zh:'魚',en:'fish',emoji:'🐟',art:'el'},
+    {es:'conejo',zh:'兔子',en:'rabbit',emoji:'🐰',art:'el'},{es:'oso',zh:'熊',en:'bear',emoji:'🐻',art:'el'},
+    {es:'elefante',zh:'大象',en:'elephant',emoji:'🐘',art:'el'},{es:'jirafa',zh:'長頸鹿',en:'giraffe',emoji:'🦒',art:'la'},
+    {es:'mono',zh:'猴子',en:'monkey',emoji:'🐒',art:'el'},{es:'tigre',zh:'老虎',en:'tiger',emoji:'🐯',art:'el'},
+    {es:'leon',zh:'獅子',en:'lion',emoji:'🦁',art:'el'},{es:'vaca',zh:'牛',en:'cow',emoji:'🐄',art:'la'},
+    {es:'cerdo',zh:'豬',en:'pig',emoji:'🐷',art:'el'},{es:'pollo',zh:'雞',en:'chicken',emoji:'🐔',art:'el'},
+    {es:'caballo',zh:'馬',en:'horse',emoji:'🐴',art:'el'},{es:'serpiente',zh:'蛇',en:'snake',emoji:'🐍',art:'la'},
+    {es:'tortuga',zh:'烏龜',en:'turtle',emoji:'🐢',art:'la'},{es:'mariposa',zh:'蝴蝶',en:'butterfly',emoji:'🦋',art:'la'},
+    {es:'pato',zh:'鴨子',en:'duck',emoji:'🦆',art:'el'},{es:'pinguino',zh:'企鵝',en:'penguin',emoji:'🐧',art:'el'},
+    {es:'rana',zh:'青蛙',en:'frog',emoji:'🐸',art:'la'},{es:'arana',zh:'蜘蛛',en:'spider',emoji:'🕷️',art:'la'},
   ]},
   body:{label:'🫀 身體',group:'vocab',items:[
-    {es:'cabeza',zh:'頭',en:'head',emoji:'🗣️'},{es:'cara',zh:'臉',en:'face',emoji:'😊'},
-    {es:'ojo',zh:'眼睛',en:'eye',emoji:'👁️'},{es:'nariz',zh:'鼻子',en:'nose',emoji:'👃'},
-    {es:'boca',zh:'嘴巴',en:'mouth',emoji:'👄'},{es:'oreja',zh:'耳朵',en:'ear',emoji:'👂'},
-    {es:'diente',zh:'牙齒',en:'tooth',emoji:'🦷'},{es:'lengua',zh:'舌頭',en:'tongue',emoji:'👅'},
-    {es:'pelo',zh:'頭髮',en:'hair',emoji:'💇'},{es:'cuello',zh:'脖子',en:'neck',emoji:'🤷'},
-    {es:'hombro',zh:'肩膀',en:'shoulder',emoji:'🤷'},{es:'brazo',zh:'手臂',en:'arm',emoji:'💪'},
-    {es:'codo',zh:'手肘',en:'elbow',emoji:'💪'},{es:'mano',zh:'手',en:'hand',emoji:'✋'},
-    {es:'dedo',zh:'手指',en:'finger',emoji:'☝️'},{es:'barriga',zh:'肚子',en:'belly',emoji:'🫃'},
-    {es:'espalda',zh:'背部',en:'back',emoji:'🔙'},{es:'pierna',zh:'腿',en:'leg',emoji:'🦵'},
-    {es:'rodilla',zh:'膝蓋',en:'knee',emoji:'🦵'},{es:'pie',zh:'腳',en:'foot',emoji:'🦶'},
-    {es:'corazon',zh:'心臟',en:'heart',emoji:'❤️'},
+    {es:'cabeza',zh:'頭',en:'head',emoji:'🗣️',art:'la'},{es:'cara',zh:'臉',en:'face',emoji:'😊',art:'la'},
+    {es:'ojo',zh:'眼睛',en:'eye',emoji:'👁️',art:'el'},{es:'nariz',zh:'鼻子',en:'nose',emoji:'👃',art:'la'},
+    {es:'boca',zh:'嘴巴',en:'mouth',emoji:'👄',art:'la'},{es:'oreja',zh:'耳朵',en:'ear',emoji:'👂',art:'la'},
+    {es:'diente',zh:'牙齒',en:'tooth',emoji:'🦷',art:'el'},{es:'lengua',zh:'舌頭',en:'tongue',emoji:'👅',art:'la'},
+    {es:'pelo',zh:'頭髮',en:'hair',emoji:'💇',art:'el'},{es:'cuello',zh:'脖子',en:'neck',emoji:'🤷',art:'el'},
+    {es:'hombro',zh:'肩膀',en:'shoulder',emoji:'🤷',art:'el'},{es:'brazo',zh:'手臂',en:'arm',emoji:'💪',art:'el'},
+    {es:'codo',zh:'手肘',en:'elbow',emoji:'💪',art:'el'},{es:'mano',zh:'手',en:'hand',emoji:'✋',art:'la'},
+    {es:'dedo',zh:'手指',en:'finger',emoji:'☝️',art:'el'},{es:'barriga',zh:'肚子',en:'belly',emoji:'🫃',art:'la'},
+    {es:'espalda',zh:'背部',en:'back',emoji:'🔙',art:'la'},{es:'pierna',zh:'腿',en:'leg',emoji:'🦵',art:'la'},
+    {es:'rodilla',zh:'膝蓋',en:'knee',emoji:'🦵',art:'la'},{es:'pie',zh:'腳',en:'foot',emoji:'🦶',art:'el'},
+    {es:'corazon',zh:'心臟',en:'heart',emoji:'❤️',art:'el'},
   ]},
   food:{label:'🍎 食物',group:'vocab',items:[
-    {es:'manzana',zh:'蘋果',en:'apple',emoji:'🍎'},{es:'platano',zh:'香蕉',en:'banana',emoji:'🍌'},
-    {es:'naranja',zh:'柳橙',en:'orange',emoji:'🍊'},{es:'uva',zh:'葡萄',en:'grape',emoji:'🍇'},
-    {es:'fresa',zh:'草莓',en:'strawberry',emoji:'🍓'},{es:'sandia',zh:'西瓜',en:'watermelon',emoji:'🍉'},
-    {es:'mango',zh:'芒果',en:'mango',emoji:'🥭'},{es:'durazno',zh:'桃子',en:'peach',emoji:'🍑'},
-    {es:'pan',zh:'麵包',en:'bread',emoji:'🍞'},{es:'arroz',zh:'米飯',en:'rice',emoji:'🍚'},
-    {es:'pasta',zh:'義大利麵',en:'pasta',emoji:'🍝'},{es:'sopa',zh:'湯',en:'soup',emoji:'🍜'},
-    {es:'pizza',zh:'披薩',en:'pizza',emoji:'🍕'},{es:'hamburguesa',zh:'漢堡',en:'burger',emoji:'🍔'},
-    {es:'huevo',zh:'蛋',en:'egg',emoji:'🥚'},{es:'queso',zh:'起司',en:'cheese',emoji:'🧀'},
-    {es:'leche',zh:'牛奶',en:'milk',emoji:'🥛'},{es:'agua',zh:'水',en:'water',emoji:'💧'},
-    {es:'jugo',zh:'果汁',en:'juice',emoji:'🧃'},{es:'helado',zh:'冰淇淋',en:'ice cream',emoji:'🍦'},
-    {es:'pastel',zh:'蛋糕',en:'cake',emoji:'🎂'},{es:'galleta',zh:'餅乾',en:'cookie',emoji:'🍪'},
-    {es:'chocolate',zh:'巧克力',en:'chocolate',emoji:'🍫'},{es:'zanahoria',zh:'胡蘿蔔',en:'carrot',emoji:'🥕'},
-    {es:'tomate',zh:'番茄',en:'tomato',emoji:'🍅'},{es:'maiz',zh:'玉米',en:'corn',emoji:'🌽'},
+    {es:'manzana',zh:'蘋果',en:'apple',emoji:'🍎',art:'la'},{es:'platano',zh:'香蕉',en:'banana',emoji:'🍌',art:'el'},
+    {es:'naranja',zh:'柳橙',en:'orange',emoji:'🍊',art:'la'},{es:'uva',zh:'葡萄',en:'grape',emoji:'🍇',art:'la'},
+    {es:'fresa',zh:'草莓',en:'strawberry',emoji:'🍓',art:'la'},{es:'sandia',zh:'西瓜',en:'watermelon',emoji:'🍉',art:'la'},
+    {es:'mango',zh:'芒果',en:'mango',emoji:'🥭',art:'el'},{es:'durazno',zh:'桃子',en:'peach',emoji:'🍑',art:'el'},
+    {es:'pan',zh:'麵包',en:'bread',emoji:'🍞',art:'el'},{es:'arroz',zh:'米飯',en:'rice',emoji:'🍚',art:'el'},
+    {es:'pasta',zh:'義大利麵',en:'pasta',emoji:'🍝',art:'la'},{es:'sopa',zh:'湯',en:'soup',emoji:'🍜',art:'la'},
+    {es:'pizza',zh:'披薩',en:'pizza',emoji:'🍕',art:'la'},{es:'hamburguesa',zh:'漢堡',en:'burger',emoji:'🍔',art:'la'},
+    {es:'huevo',zh:'蛋',en:'egg',emoji:'🥚',art:'el'},{es:'queso',zh:'起司',en:'cheese',emoji:'🧀',art:'el'},
+    {es:'leche',zh:'牛奶',en:'milk',emoji:'🥛',art:'la'},{es:'agua',zh:'水',en:'water',emoji:'💧',art:'el'},
+    {es:'jugo',zh:'果汁',en:'juice',emoji:'🧃',art:'el'},{es:'helado',zh:'冰淇淋',en:'ice cream',emoji:'🍦',art:'el'},
+    {es:'pastel',zh:'蛋糕',en:'cake',emoji:'🎂',art:'el'},{es:'galleta',zh:'餅乾',en:'cookie',emoji:'🍪',art:'la'},
+    {es:'chocolate',zh:'巧克力',en:'chocolate',emoji:'🍫',art:'el'},{es:'zanahoria',zh:'胡蘿蔔',en:'carrot',emoji:'🥕',art:'la'},
+    {es:'tomate',zh:'番茄',en:'tomato',emoji:'🍅',art:'el'},{es:'maiz',zh:'玉米',en:'corn',emoji:'🌽',art:'el'},
   ]},
   people:{label:'👨‍👩‍👧 人物',group:'vocab',items:[
     {es:'mama',zh:'媽媽',en:'mom',emoji:'👩'},{es:'papa',zh:'爸爸',en:'dad',emoji:'👨'},
@@ -407,34 +419,34 @@ var data = {
     {es:'tu',zh:'你',en:'you',emoji:'👉'},
   ]},
   weather:{label:'🌤️ 天氣四季',group:'vocab',items:[
-    {es:'sol',zh:'太陽',en:'sun',emoji:'☀️'},{es:'lluvia',zh:'雨',en:'rain',emoji:'🌧️'},
-    {es:'nube',zh:'雲',en:'cloud',emoji:'☁️'},{es:'viento',zh:'風',en:'wind',emoji:'💨'},
-    {es:'nieve',zh:'雪',en:'snow',emoji:'❄️'},{es:'tormenta',zh:'暴風雨',en:'storm',emoji:'⛈️'},
-    {es:'arcoiris',zh:'彩虹',en:'rainbow',emoji:'🌈'},{es:'niebla',zh:'霧',en:'fog',emoji:'🌫️'},
+    {es:'sol',zh:'太陽',en:'sun',emoji:'☀️',art:'el'},{es:'lluvia',zh:'雨',en:'rain',emoji:'🌧️',art:'la'},
+    {es:'nube',zh:'雲',en:'cloud',emoji:'☁️',art:'la'},{es:'viento',zh:'風',en:'wind',emoji:'💨',art:'el'},
+    {es:'nieve',zh:'雪',en:'snow',emoji:'❄️',art:'la'},{es:'tormenta',zh:'暴風雨',en:'storm',emoji:'⛈️',art:'la'},
+    {es:'arcoiris',zh:'彩虹',en:'rainbow',emoji:'🌈',art:'el'},{es:'niebla',zh:'霧',en:'fog',emoji:'🌫️',art:'la'},
     {es:'calor',zh:'熱',en:'hot',emoji:'🥵'},{es:'frio',zh:'冷',en:'cold',emoji:'🥶'},
     {es:'templado',zh:'溫暖',en:'warm',emoji:'😊'},{es:'humedo',zh:'潮濕',en:'humid',emoji:'💦'},
-    {es:'primavera',zh:'春天',en:'spring',emoji:'🌸'},{es:'verano',zh:'夏天',en:'summer',emoji:'🌻'},
-    {es:'otono',zh:'秋天',en:'autumn',emoji:'🍂'},{es:'invierno',zh:'冬天',en:'winter',emoji:'⛄'},
+    {es:'primavera',zh:'春天',en:'spring',emoji:'🌸',art:'la'},{es:'verano',zh:'夏天',en:'summer',emoji:'🌻',art:'el'},
+    {es:'otono',zh:'秋天',en:'autumn',emoji:'🍂',art:'el'},{es:'invierno',zh:'冬天',en:'winter',emoji:'⛄',art:'el'},
   ]},
   classroom:{label:'🎒 教室用品',group:'vocab',items:[
-    {es:'mochila',zh:'書包',en:'backpack',emoji:'🎒'},{es:'libro',zh:'書',en:'book',emoji:'📚'},
-    {es:'cuaderno',zh:'筆記本',en:'notebook',emoji:'📓'},{es:'lapiz',zh:'鉛筆',en:'pencil',emoji:'✏️'},
-    {es:'boligrafo',zh:'原子筆',en:'pen',emoji:'🖊️'},{es:'goma',zh:'橡皮擦',en:'eraser',emoji:'🧹'},
-    {es:'regla',zh:'尺',en:'ruler',emoji:'📏'},{es:'tijeras',zh:'剪刀',en:'scissors',emoji:'✂️'},
-    {es:'pegamento',zh:'膠水',en:'glue',emoji:'🗂️'},{es:'colores',zh:'彩色筆',en:'crayons',emoji:'🖍️'},
-    {es:'pizarra',zh:'黑板',en:'blackboard',emoji:'🖥️'},{es:'escritorio',zh:'桌子',en:'desk',emoji:'🪑'},
-    {es:'silla',zh:'椅子',en:'chair',emoji:'🪑'},{es:'mapa',zh:'地圖',en:'map',emoji:'🗺️'},
-    {es:'computadora',zh:'電腦',en:'computer',emoji:'💻'},{es:'calculadora',zh:'計算機',en:'calculator',emoji:'🧮'},
+    {es:'mochila',zh:'書包',en:'backpack',emoji:'🎒',art:'la'},{es:'libro',zh:'書',en:'book',emoji:'📚',art:'el'},
+    {es:'cuaderno',zh:'筆記本',en:'notebook',emoji:'📓',art:'el'},{es:'lapiz',zh:'鉛筆',en:'pencil',emoji:'✏️',art:'el'},
+    {es:'boligrafo',zh:'原子筆',en:'pen',emoji:'🖊️',art:'el'},{es:'goma',zh:'橡皮擦',en:'eraser',emoji:'🧹',art:'la'},
+    {es:'regla',zh:'尺',en:'ruler',emoji:'📏',art:'la'},{es:'tijeras',zh:'剪刀',en:'scissors',emoji:'✂️',art:'las'},
+    {es:'pegamento',zh:'膠水',en:'glue',emoji:'🗂️',art:'el'},{es:'colores',zh:'彩色筆',en:'crayons',emoji:'🖍️',art:'los'},
+    {es:'pizarra',zh:'黑板',en:'blackboard',emoji:'🖥️',art:'la'},{es:'escritorio',zh:'桌子',en:'desk',emoji:'🪑',art:'el'},
+    {es:'silla',zh:'椅子',en:'chair',emoji:'🪑',art:'la'},{es:'mapa',zh:'地圖',en:'map',emoji:'🗺️',art:'el'},
+    {es:'computadora',zh:'電腦',en:'computer',emoji:'💻',art:'la'},{es:'calculadora',zh:'計算機',en:'calculator',emoji:'🧮',art:'la'},
   ]},
   transport:{label:'🚗 交通工具',group:'vocab',items:[
-    {es:'coche',zh:'汽車',en:'car',emoji:'🚗'},{es:'autobus',zh:'公車',en:'bus',emoji:'🚌'},
-    {es:'tren',zh:'火車',en:'train',emoji:'🚆'},{es:'metro',zh:'地鐵',en:'subway',emoji:'🚇'},
-    {es:'bicicleta',zh:'腳踏車',en:'bicycle',emoji:'🚲'},{es:'moto',zh:'摩托車',en:'motorcycle',emoji:'🏍️'},
-    {es:'avion',zh:'飛機',en:'airplane',emoji:'✈️'},{es:'barco',zh:'船',en:'ship',emoji:'🚢'},
-    {es:'taxi',zh:'計程車',en:'taxi',emoji:'🚕'},{es:'camion',zh:'卡車',en:'truck',emoji:'🚚'},
-    {es:'helicoptero',zh:'直升機',en:'helicopter',emoji:'🚁'},{es:'cohete',zh:'火箭',en:'rocket',emoji:'🚀'},
-    {es:'patineta',zh:'滑板',en:'skateboard',emoji:'🛹'},{es:'a pie',zh:'走路',en:'on foot',emoji:'🚶'},
-    {es:'ambulancia',zh:'救護車',en:'ambulance',emoji:'🚑'},{es:'bomberos',zh:'消防車',en:'fire truck',emoji:'🚒'},
+    {es:'coche',zh:'汽車',en:'car',emoji:'🚗',art:'el'},{es:'autobus',zh:'公車',en:'bus',emoji:'🚌',art:'el'},
+    {es:'tren',zh:'火車',en:'train',emoji:'🚆',art:'el'},{es:'metro',zh:'地鐵',en:'subway',emoji:'🚇',art:'el'},
+    {es:'bicicleta',zh:'腳踏車',en:'bicycle',emoji:'🚲',art:'la'},{es:'moto',zh:'摩托車',en:'motorcycle',emoji:'🏍️',art:'la'},
+    {es:'avion',zh:'飛機',en:'airplane',emoji:'✈️',art:'el'},{es:'barco',zh:'船',en:'ship',emoji:'🚢',art:'el'},
+    {es:'taxi',zh:'計程車',en:'taxi',emoji:'🚕',art:'el'},{es:'camion',zh:'卡車',en:'truck',emoji:'🚚',art:'el'},
+    {es:'helicoptero',zh:'直升機',en:'helicopter',emoji:'🚁',art:'el'},{es:'cohete',zh:'火箭',en:'rocket',emoji:'🚀',art:'el'},
+    {es:'patineta',zh:'滑板',en:'skateboard',emoji:'🛹',art:'la'},{es:'a pie',zh:'走路',en:'on foot',emoji:'🚶'},
+    {es:'ambulancia',zh:'救護車',en:'ambulance',emoji:'🚑',art:'la'},{es:'bomberos',zh:'消防車',en:'fire truck',emoji:'🚒',art:'los'},
   ]},
   feelings:{label:'💛 心情',group:'vocab',items:[
     {es:'feliz',zh:'開心',en:'happy',emoji:'😄'},
@@ -540,8 +552,9 @@ function buildCard(item, cat, delay) {
     visual = '<div class="visual">' + item.emoji + '</div>';
   }
 
+  var artBadge = item.art ? '<span class="art-badge art-' + item.art + '">' + item.art + '</span>' : '';
   card.innerHTML = visual +
-    '<div class="es">' + item.es + '</div>' +
+    '<div class="es">' + artBadge + item.es + '</div>' +
     '<div class="zh">' + item.zh + '</div>' +
     '<div class="en">' + item.en + '</div>' +
     '<div class="speak-btn">🔊</div>';
@@ -577,6 +590,7 @@ function renderGrid(cat) {
   for(var j = 0; j < tabs.length; j++) {
     tabs[j].classList.toggle('active', tabs[j].getAttribute('data-cat') === cat);
   }
+  if(typeof twemoji !== 'undefined') twemoji.parse(grid, {folder:'72x72', ext:'.png'});
 }
 
 function renderSearch(q) {
@@ -599,6 +613,7 @@ function renderSearch(q) {
   if(count === 0) {
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#ccc;padding:40px">找不到 · not found 😅</div>';
   }
+  if(typeof twemoji !== 'undefined') twemoji.parse(grid, {folder:'72x72', ext:'.png'});
 }
 
 function renderTabs() {
