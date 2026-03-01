@@ -143,7 +143,9 @@
   .tab[data-cat="weather"].active  { background:#38BDF8; }
   .tab[data-cat="classroom"].active{ background:#F97316; }
   .tab[data-cat="transport"].active{ background:#64748B; color:white; }
-  .tab[data-cat="feelings"].active { background:#F59E0B; }
+  .tab[data-cat="feelings"].active  { background:#F59E0B; }
+  .tab[data-cat="ocean"].active     { background:#0EA5E9; }
+  .tab[data-cat="festivals"].active { background:#EC4899; }
 
   .search-wrap { max-width:320px; margin:0 auto 16px; position:relative; }
   .search-wrap input {
@@ -213,6 +215,8 @@
   .cat-classroom .card::before { background:#F97316; }
   .cat-transport .card::before { background:#64748B; }
   .cat-feelings  .card::before { background:#F59E0B; }
+  .cat-ocean     .card::before { background:#0EA5E9; }
+  .cat-festivals .card::before { background:#EC4899; }
   .cat-search  .card::before { background:#4D96FF; }
 
   .card .visual { font-size:1.9rem; margin-bottom:6px; min-height:44px; display:flex; align-items:center; justify-content:center; }
@@ -321,6 +325,8 @@ var data = {
     {es:'ochenta',zh:'八十',en:'80',n:80},{es:'ochenta y cinco',zh:'八十五',en:'85',n:85},
     {es:'noventa',zh:'九十',en:'90',n:90},{es:'noventa y cinco',zh:'九十五',en:'95',n:95},
     {es:'cien',zh:'一百',en:'100',n:100},
+    {es:'doscientos',zh:'兩百',en:'200',n:200},{es:'quinientos',zh:'五百',en:'500',n:500},
+    {es:'mil',zh:'一千',en:'1,000',n:1000},{es:'diez mil',zh:'一萬',en:'10,000',n:10000},
   ]},
   days:{label:'📅 星期',group:'basic',items:[
     {es:'lunes',zh:'星期一',en:'Monday',emoji:'🌙'},{es:'martes',zh:'星期二',en:'Tuesday',emoji:'🔴'},
@@ -364,16 +370,27 @@ var data = {
   ]},
   animals:{label:'🐾 動物',group:'vocab',items:[
     {es:'perro',zh:'狗',en:'dog',emoji:'🐶',art:'el'},{es:'gato',zh:'貓',en:'cat',emoji:'🐱',art:'el'},
-    {es:'pajaro',zh:'鳥',en:'bird',emoji:'🐦',art:'el'},{es:'pez',zh:'魚',en:'fish',emoji:'🐟',art:'el'},
-    {es:'conejo',zh:'兔子',en:'rabbit',emoji:'🐰',art:'el'},{es:'oso',zh:'熊',en:'bear',emoji:'🐻',art:'el'},
-    {es:'elefante',zh:'大象',en:'elephant',emoji:'🐘',art:'el'},{es:'jirafa',zh:'長頸鹿',en:'giraffe',emoji:'🦒',art:'la'},
-    {es:'mono',zh:'猴子',en:'monkey',emoji:'🐒',art:'el'},{es:'tigre',zh:'老虎',en:'tiger',emoji:'🐯',art:'el'},
+    {es:'pajaro',zh:'鳥',en:'bird',emoji:'🐦',art:'el'},{es:'conejo',zh:'兔子',en:'rabbit',emoji:'🐰',art:'el'},
+    {es:'oso',zh:'熊',en:'bear',emoji:'🐻',art:'el'},{es:'elefante',zh:'大象',en:'elephant',emoji:'🐘',art:'el'},
+    {es:'jirafa',zh:'長頸鹿',en:'giraffe',emoji:'🦒',art:'la'},{es:'mono',zh:'猴子',en:'monkey',emoji:'🐒',art:'el'},
+    {es:'gorila',zh:'猩猩',en:'gorilla',emoji:'🦍',art:'el'},{es:'tigre',zh:'老虎',en:'tiger',emoji:'🐯',art:'el'},
     {es:'leon',zh:'獅子',en:'lion',emoji:'🦁',art:'el'},{es:'vaca',zh:'牛',en:'cow',emoji:'🐄',art:'la'},
     {es:'cerdo',zh:'豬',en:'pig',emoji:'🐷',art:'el'},{es:'pollo',zh:'雞',en:'chicken',emoji:'🐔',art:'el'},
     {es:'caballo',zh:'馬',en:'horse',emoji:'🐴',art:'el'},{es:'serpiente',zh:'蛇',en:'snake',emoji:'🐍',art:'la'},
+    {es:'camaleon',zh:'變色龍',en:'chameleon',emoji:'🦎',art:'el'},{es:'aguila',zh:'老鷹',en:'eagle',emoji:'🦅',art:'el'},
     {es:'tortuga',zh:'烏龜',en:'turtle',emoji:'🐢',art:'la'},{es:'mariposa',zh:'蝴蝶',en:'butterfly',emoji:'🦋',art:'la'},
     {es:'pato',zh:'鴨子',en:'duck',emoji:'🦆',art:'el'},{es:'pinguino',zh:'企鵝',en:'penguin',emoji:'🐧',art:'el'},
     {es:'rana',zh:'青蛙',en:'frog',emoji:'🐸',art:'la'},{es:'arana',zh:'蜘蛛',en:'spider',emoji:'🕷️',art:'la'},
+  ]},
+  ocean:{label:'🌊 海洋生物',group:'vocab',items:[
+    {es:'pez',zh:'魚',en:'fish',emoji:'🐟',art:'el'},{es:'tiburon',zh:'鯊魚',en:'shark',emoji:'🦈',art:'el'},
+    {es:'pulpo',zh:'章魚',en:'octopus',emoji:'🐙',art:'el'},{es:'ballena',zh:'鯨魚',en:'whale',emoji:'🐋',art:'la'},
+    {es:'delfin',zh:'海豚',en:'dolphin',emoji:'🐬',art:'el'},{es:'cangrejo',zh:'螃蟹',en:'crab',emoji:'🦀',art:'el'},
+    {es:'langosta',zh:'龍蝦',en:'lobster',emoji:'🦞',art:'la'},{es:'camaron',zh:'蝦子',en:'shrimp',emoji:'🦐',art:'el'},
+    {es:'estrella de mar',zh:'海星',en:'starfish',emoji:'⭐',art:'la'},{es:'medusa',zh:'水母',en:'jellyfish',emoji:'🪼',art:'la'},
+    {es:'tortuga marina',zh:'海龜',en:'sea turtle',emoji:'🐢',art:'la'},{es:'foca',zh:'海豹',en:'seal',emoji:'🦭',art:'la'},
+    {es:'pinguino',zh:'企鵝',en:'penguin',emoji:'🐧',art:'el'},{es:'calamar',zh:'魷魚',en:'squid',emoji:'🦑',art:'el'},
+    {es:'caballo de mar',zh:'海馬',en:'seahorse',emoji:'🐴',art:'el'},{es:'coral',zh:'珊瑚',en:'coral',emoji:'🪸',art:'el'},
   ]},
   body:{label:'🫀 身體',group:'vocab',items:[
     {es:'cabeza',zh:'頭',en:'head',emoji:'🗣️',art:'la'},{es:'cara',zh:'臉',en:'face',emoji:'😊',art:'la'},
@@ -447,6 +464,16 @@ var data = {
     {es:'helicoptero',zh:'直升機',en:'helicopter',emoji:'🚁',art:'el'},{es:'cohete',zh:'火箭',en:'rocket',emoji:'🚀',art:'el'},
     {es:'patineta',zh:'滑板',en:'skateboard',emoji:'🛹',art:'la'},{es:'a pie',zh:'走路',en:'on foot',emoji:'🚶'},
     {es:'ambulancia',zh:'救護車',en:'ambulance',emoji:'🚑',art:'la'},{es:'bomberos',zh:'消防車',en:'fire truck',emoji:'🚒',art:'los'},
+  ]},
+  festivals:{label:'🎉 節慶',group:'vocab',items:[
+    {es:'Navidad',zh:'聖誕節',en:'Christmas',emoji:'🎄',art:'la'},{es:'Ano Nuevo',zh:'新年',en:'New Year',emoji:'🎆',art:'el'},
+    {es:'Halloween',zh:'萬聖節',en:'Halloween',emoji:'🎃'},{es:'Pascua',zh:'復活節',en:'Easter',emoji:'🐣',art:'la'},
+    {es:'cumpleanos',zh:'生日',en:'birthday',emoji:'🎂',art:'el'},{es:'fiesta',zh:'派對',en:'party',emoji:'🎉',art:'la'},
+    {es:'Dia de Muertos',zh:'亡靈節',en:'Day of the Dead',emoji:'💀'},{es:'Carnaval',zh:'嘉年華',en:'Carnival',emoji:'🎭',art:'el'},
+    {es:'regalo',zh:'禮物',en:'gift',emoji:'🎁',art:'el'},{es:'vela',zh:'蠟燭',en:'candle',emoji:'🕯️',art:'la'},
+    {es:'globo',zh:'氣球',en:'balloon',emoji:'🎈',art:'el'},{es:'fuegos artificiales',zh:'煙火',en:'fireworks',emoji:'🎆'},
+    {es:'disfraz',zh:'變裝',en:'costume',emoji:'👻',art:'el'},{es:'dulce',zh:'糖果',en:'candy',emoji:'🍬',art:'el'},
+    {es:'decoracion',zh:'裝飾',en:'decoration',emoji:'✨',art:'la'},{es:'musica',zh:'音樂',en:'music',emoji:'🎵',art:'la'},
   ]},
   feelings:{label:'💛 心情',group:'vocab',items:[
     {es:'feliz',zh:'開心',en:'happy',emoji:'😄'},
